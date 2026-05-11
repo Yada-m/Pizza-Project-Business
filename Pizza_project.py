@@ -14,26 +14,38 @@ def main():
     CHEESE_ADD = 1
 
     print("Welcome to the Python Pizza Ordering System!")
-    
+
     # --- SECTION 2: GETTING USER INPUT ---
     # We use camelCase for variables like 'pizzaSize'.
     # .upper() is used so that 's' and 'S' both work correctly.
-    pizzaSize = input("What size pizza do you want? S, M, or L: ").upper()
-    addPepperoni = input("Do you want pepperoni? Y or N: ").upper()
-    extraCheese = input("Do you want extra cheese? Y or N: ").upper()
+    pizzaSize = input("What size pizza do you want? S, M, or L: ").strip().upper()
+    addPepperoni = input("Do you want pepperoni? Y or N: ").strip().upper()
+    extraCheese = input("Do you want extra cheese? Y or N: ").strip().upper()
 
     # --- SECTION 3: CALCULATING THE BASE PRICE ---
     totalBill = 0
 
     if pizzaSize == "S":
         totalBill = SMALL_PRICE
+        sizeName = "Small"
     elif pizzaSize == "M":
         totalBill = MEDIUM_PRICE
+        sizeName = "Medium"
     elif pizzaSize == "L":
         totalBill = LARGE_PRICE
+        sizeName = "Large"
     else:
         # If the user types something other than S, M, or L, we stop here.
         print("Invalid size selection. Program ending.")
+        return
+
+    # Validate topping responses.
+    if addPepperoni not in ("Y", "N"):
+        print("Invalid pepperoni selection. Program ending.")
+        return
+
+    if extraCheese not in ("Y", "N"):
+        print("Invalid extra cheese selection. Program ending.")
         return
 
     # --- SECTION 4: ADDING TOPPING COSTS ---
@@ -49,12 +61,18 @@ def main():
         totalBill += CHEESE_ADD
 
     # --- SECTION 5: FINAL DISPLAY ---
-    # We print the final total. 
+    # We print an order summary with the final total.
     # The :.2f ensures the number looks like money (e.g., 20.00).
-    print("\n" + "-"*20)
+    print("\n" + "-" * 26)
+    print("Order Summary")
+    print("-" * 26)
+    print(f"Size: {sizeName} ({pizzaSize})")
+    print(f"Pepperoni: {'Yes' if addPepperoni == 'Y' else 'No'}")
+    print(f"Extra Cheese: {'Yes' if extraCheese == 'Y' else 'No'}")
     print(f"Final Bill: ${totalBill:.2f}")
-    print("-"*20)
+    print("-" * 26)
     print("Thank you for your order!")
+
 
 # This tells Python to start the program by running the main function.
 if __name__ == "__main__":
